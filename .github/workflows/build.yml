@@ -12,7 +12,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     container:
-      image: openfoam/openfoam:v2406  # Usa a imagem oficial do OpenFOAM
+      image: openfoamplus/of_v2406_centos73  # Imagem correta do OpenFOAM
 
     steps:
       - name: Checkout do repositório
@@ -20,5 +20,5 @@ jobs:
 
       - name: Configurar OpenFOAM e compilar DarcyFoam
         run: |
-          source /opt/openfoam2406/etc/bashrc
+          source /opt/OpenFOAM/OpenFOAM-v2406/etc/bashrc
           wmake
