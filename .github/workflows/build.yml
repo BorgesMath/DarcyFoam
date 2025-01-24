@@ -16,17 +16,14 @@ jobs:
       - name: Checkout do repositório
         uses: actions/checkout@v4
 
-      - name: Adicionar repositório e instalar OpenFOAM
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y software-properties-common
-          sudo add-apt-repository -y "deb http://dl.openfoam.org/ubuntu $(lsb_release -cs) main"
-          curl -fsSL http://dl.openfoam.org/gpg.key | sudo tee /etc/apt/trusted.gpg.d/openfoam.asc
-          sudo apt-get update
-          sudo apt-get install -y openfoam2406
+      - name: Construir a imagem Docker personalizada
+        run: docker build -t openfoam-custom .
 
-      - name: Compilar DarcyFoam com wmake
+      - name: Compilar DarcyFoam
         run: |
-          source /usr/lib/openfoam/openfoam2406/etc/bashrc
-          wmake
-        working-directory: ${{ github.workspace }}
+          docker run --rm -v ${{ github.workspace }}:/home/openfoam openfoam-custom /bin/bash -c "
+            source /opt/openfoam8/etc/bashrc
+            cd /home/openfoam
+            wmake
+          "
+
