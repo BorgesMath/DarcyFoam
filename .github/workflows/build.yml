@@ -11,18 +11,14 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    container:
+      image: openfoam/openfoam:v2406  # Usa a imagem oficial do OpenFOAM
 
     steps:
       - name: Checkout do repositório
         uses: actions/checkout@v4
 
-      - name: Instalar OpenFOAM
+      - name: Configurar OpenFOAM e compilar DarcyFoam
         run: |
-          sudo apt-get update
-          sudo apt-get install -y openfoam
-
-      - name: Compilar DarcyFoam com wmake
-        run: |
-          source /usr/lib/openfoam/openfoam2406/etc/bashrc
+          source /opt/openfoam2406/etc/bashrc
           wmake
-        working-directory: ${{ github.workspace }}
