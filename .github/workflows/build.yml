@@ -19,7 +19,7 @@ jobs:
       - name: Instalar OpenFOAM
         run: |
           sudo apt-get update
-          sudo apt-get install -y openfoam2406-default
+          sudo apt-get install -y openfoam2406
 
       - name: Compilar DarcyFoam com wmake
         run: |
